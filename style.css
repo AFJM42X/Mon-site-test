@@ -1,0 +1,358 @@
+html, body {
+  overflow-x: hidden; /* Cache tout scroll horizontal global */
+}
+
+html { scroll-behavior: smooth; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Lora',sans-serif; background:#f9f7f4; color:#333; }
+
+/* Navbar */
+nav { position:fixed; top:0; left:0; width:100vw; height: auto; background:rgba(122,87,96,0.95); transition:top 0.3s; z-index:1000; }
+.nav-container { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:auto; padding:0 20px; height: 70px }
+.nav-logo { color:white; font-family:'Playfair Display',serif; font-size:1.5em; }
+.nav-links { display:flex; list-style:none; }
+.nav-links li { margin:0 10px; }
+.nav-links a { color:white; text-decoration:none; padding:10px 15px; transition:background 0.3s; }
+.nav-links a:hover { background:rgba(255,255,255,0.2); border-radius:5px; }
+
+.navbar-address {
+  background-color: white;
+  color: #7A5760;
+  font-size: 0.9rem;
+  text-align: left;
+  margin-top: -2px;  /* pour coller à la Nav Bar */
+}
+
+
+/* Burger Menu */
+.burger { display:none; font-size:2em; color:white; cursor:pointer; }
+@media(max-width:900px){
+  .nav-links { display:none; flex-direction:column; background:#7a5760; width:100%; }
+  .nav-links.show { display:flex; }
+  .burger { display:block; }
+}
+
+/* Logo */
+#logo-container { text-align:center; padding: 10px 0; ; background-color: #f9f7f4; }
+#logo { width:100px; cursor:pointer; transition:transform 0.3s; }
+#logo:hover { transform:scale(1.1); }
+
+/* Sections */
+section { padding:80px 20px; text-align:center; }
+h2 { font-family:'Playfair Display',serif; color:#7a5760; margin-bottom:20px; }
+
+/* Carousel */
+.carousel {
+  position: relative;
+  max-width: 900px;
+  margin: auto;
+  margin-top: 100px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.slides-container {
+  display: flex;
+  transition: transform 0.8s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  position: relative;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.slide img {
+  width: 100%;
+  border-radius: 10px;
+}
+.slide.active { display:block; }
+.caption {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  max-width: 50%;
+  text-align: left;
+}
+
+/* Caroussel mobile */
+
+/* Responsive mobile : vertical visuel, scroll horizontal fonctionnel */
+@media(max-width: 900px) {
+  .carousel {
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .slides-container {
+    flex-wrap: nowrap;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    flex: 0 0 100%;
+    height: auto;
+  }
+
+  /* On masque les dots ou les stylise en version mobile */
+  .dots {
+    bottom: 10px;
+  }
+}
+
+
+/* Dots intégrés */
+.dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+.dots span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.dots span.active { background:#7a5760; }
+
+/* Cards */
+.consult-cards { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
+.card { background:#e5d4d8; padding:20px; border-radius:10px; width:250px;
+        box-shadow:0 3px 8px rgba(0,0,0,0.1); transition:transform 0.3s; }
+.card:hover { transform:translateY(-5px); }
+
+/* Formulaire */
+form { display:flex; flex-direction:column; max-width:400px; margin:20px auto; gap:15px; }
+input,textarea { padding:10px; border:1px solid #ccc; border-radius:5px; }
+button { background:#7a5760; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer; }
+button:hover { background:#5a3f48; }
+
+/* Animations */
+.fade-in { opacity:0; transform:translateY(20px); transition:all 1s ease; }
+.slide-in { opacity:0; transform:translateX(-30px); transition:all 1s ease; }
+.visible { opacity:1 !important; transform:translate(0) !important; }
+
+/* Footer enrichi */
+footer { background:#7a5760; color:white; text-align:center; padding:30px 20px; margin-top:50px; }
+.footer-infos p { margin-bottom:10px; }
+.footer-links a { color:white; margin:0 5px; text-decoration:underline; }
+
+/* Responsive */
+/* Burger visible en mobile */
+@media(max-width:900px){
+  .nav-links { display:none; }
+  .burger { display:block; cursor:pointer; font-size:2em; color:white; }
+}
+
+
+/* Overlay fullscreen mobile menu */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100%;
+  background-color: rgba(0,0,0,0.95);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay-content {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.overlay-content a {
+  color: white;
+  font-size: 2em;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.overlay-content a:hover { color: #e5d4d8; }
+
+.overlay.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Header de l’overlay (pour la croix) */
+
+.overlay-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+.overlay-burger {
+  font-size: 2em;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.overlay-burger:hover {
+  transform: scale(1.2);
+}
+
+/* Contenu centré */
+.overlay-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.overlay-content a {
+  color: white;
+  font-size: 2em;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.overlay-content a:hover {
+  color: #e5d4d8;
+}
+
+/* Bouton retour en haut */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background-color: #7a5760;
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+  display: none; /* masqué par défaut */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: background 0.3s, transform 0.3s;
+  z-index: 1500;
+}
+#backToTop:hover {
+  background-color: #5a3f48;
+  transform: scale(1.1);
+}
+
+/* Masqué sur mobile */
+@media(max-width: 900px){
+  #backToTop { display: none !important; }
+}
+
+ul {
+  list-style-type: none; /* Supprime les puces */
+  padding-left: 0;       /* Supprime le retrait à gauche */
+  margin: 0;             /* Optionnel : supprime la marge */
+}
+
+/* ========================
+   SÉPARATEUR
+======================== */
+
+.separator {
+  border: none;
+  opacity: 0.5;
+  border-top: 3px solid #807477; /* Ligne discrète */
+  margin: 2rem auto; /* Espace autour */
+  width: 80%; /* Plus court que la section */
+  border-radius: 50px;
+}
+
+
+body.overlay-active {
+  overflow: hidden;
+}
+
+
+.list-horaires{
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+/*Styles horaires*/
+
+ .horaires-list {
+    list-style: none;
+    padding: 0;
+    display: inline-block; /* Permet le centrage avec text-align */
+    text-align: left;      /* Pour que le contenu reste aligné à gauche à l’intérieur */
+  }
+
+  .horaires-list li {
+    display: flex;
+    align-items: flex-start; /* Jour aligné en haut */
+    margin-bottom: 1em;
+  }
+
+  .jour {
+    display: inline-block;
+    width: 100px; /* Ajuste pour aligner */
+    font-weight: bold;
+  }
+
+  .heures div {
+    margin-left: 1em;
+  }
+
+  .heures div + div {
+    margin-top: 0.3em;
+  }
+
+  /*Tarifs styles*/
+
+.tarifs-container {
+  display: flex;
+  flex-direction: column;   /* Empile par défaut (mobile first) */
+  gap: 2rem;                /* Espace entre les blocs */
+  max-width: 800px;         /* Pour éviter que ça s'étale trop */
+  margin: 0 auto;
+}
+
+.tarif-block h3 {
+  margin-bottom: 0.5rem;
+}
+
+.tarif-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tarif-block ul li {
+  margin-bottom: 0.3rem;
+}
+
+/* Version desktop : les blocs passent en ligne */
+@media (min-width: 768px) {
+  .tarifs-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .tarif-block {
+    flex: 1;                 /* Chaque bloc prend la même largeur */
+  }
+}
